@@ -163,18 +163,25 @@ export default {
     }, 
     methods:{ 
         getData(){ 
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
             var uri = this.$apiUrl + '/spare' 
-            this.$http.get(uri).then(response =>{ 
+            this.$http.get(uri,auth).then(response =>{ 
                 this.users=response.data.message 
             }) 
         }, 
         sendData(){ 
             this.user.append('name', this.form.name); 
             this.user.append('merk', this.form.merk); 
-            this.user.append('amount', this.form.amount);  
+            this.user.append('amount', this.form.amount); 
+
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            } 
             var uri =this.$apiUrl + '/spare' 
             this.load = true 
-            this.$http.post(uri,this.user).then(response =>{ 
+            this.$http.post(uri,this.user,auth).then(response =>{ 
                 this.snackbar = true; //mengaktifkan snackbar 
                 this.color = 'green'; //memberi warna snackbar 
                 this.text = response.data.message; //memasukkan pesan ke snackbar 
@@ -195,9 +202,13 @@ export default {
             this.user.append('name', this.form.name); 
             this.user.append('merk', this.form.merk); 
             this.user.append('amount', this.form.amount); 
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
+
             var uri = this.$apiUrl + '/spare/' + this.updatedId; 
             this.load = true 
-            this.$http.post(uri,this.user).then(response =>{
+            this.$http.post(uri,this.user,auth).then(response =>{
             this.snackbar = true; //mengaktifkan snackbar 
             this.color = 'green'; //memberi warna snackbar 
             this.text = response.data.message; //memasukkan pesan ke snackbar 
@@ -224,7 +235,11 @@ export default {
         }, 
         deleteData(deleteId){ //menghapus data 
             var uri = this.$apiUrl + '/spare/' + deleteId; //data dihapus berdasarkan id 
-            this.$http.delete(uri).then(response =>{ 
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
+
+            this.$http.delete(uri,auth).then(response =>{ 
                 this.snackbar = true; 
                 this.text = response.data.message; 
                 this.color = 'green' 

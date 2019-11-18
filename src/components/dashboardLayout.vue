@@ -49,6 +49,11 @@
                 drawer: null,
                 items: [
                     {
+                        title: 'Login Controller',
+                        icon: 'mdi-human-male',
+                        route: '/login'
+                    },
+                    {
                         title: 'User Controller',
                         icon: 'mdi-human-male',
                         route: '/user'

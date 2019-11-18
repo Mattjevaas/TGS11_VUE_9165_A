@@ -26,6 +26,11 @@ function loadView(view)
                     name: 'LandingController',
                     path: '',
                     component: loadView('landingController')
+                },
+                {
+                    name: 'LoginController',
+                    path: '/login',
+                    component: loadView('loginController')
                 }
             ]
         },

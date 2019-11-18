@@ -156,18 +156,25 @@ export default {
     }, 
     methods:{ 
         getData(){ 
+
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
             var uri = this.$apiUrl + '/user' 
-            this.$http.get(uri).then(response =>{ 
+            this.$http.get(uri,auth).then(response =>{ 
                 this.users=response.data.message 
             }) 
         }, 
         sendData(){ 
             this.user.append('name', this.form.name); 
-            this.user.append('email', this.form.email); 
+            this.user.append('email', this.form.email);
             this.user.append('password', this.form.password); 
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
             var uri =this.$apiUrl + '/user' 
             this.load = true 
-            this.$http.post(uri,this.user).then(response =>{ 
+            this.$http.post(uri,this.user,auth).then(response =>{ 
                 this.snackbar = true; //mengaktifkan snackbar 
                 this.color = 'green'; //memberi warna snackbar 
                 this.text = response.data.message; //memasukkan pesan ke snackbar 
@@ -187,10 +194,13 @@ export default {
         updateData(){ 
             this.user.append('name', this.form.name); 
             this.user.append('email', this.form.email); 
-            this.user.append('password', this.form.password); 
+            this.user.append('password', this.form.password);
+            const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
             var uri = this.$apiUrl + '/user/' + this.updatedId; 
             this.load = true 
-            this.$http.post(uri,this.user).then(response =>{
+            this.$http.post(uri,this.user,auth).then(response =>{
             this.snackbar = true; //mengaktifkan snackbar 
             this.color = 'green'; //memberi warna snackbar 
             this.text = response.data.message; //memasukkan pesan ke snackbar 
@@ -216,8 +226,11 @@ export default {
             this.updatedId = item.id 
         }, 
         deleteData(deleteId){ //menghapus data 
+        const auth = {
+                headers: {Authorization: this.$cookie.get('TOKEN')} 
+            }
             var uri = this.$apiUrl + '/user/' + deleteId; //data dihapus berdasarkan id 
-            this.$http.delete(uri).then(response =>{ 
+            this.$http.delete(uri,auth).then(response =>{ 
                 this.snackbar = true; 
                 this.text = response.data.message; 
                 this.color = 'green' 
